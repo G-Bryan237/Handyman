@@ -1,0 +1,226 @@
+import React, { useRef, useEffect } from 'react';
+import { View, Text, TextInput, Image, ScrollView, Animated, Dimensions, TouchableOpacity } from 'react-native';
+import { FontAwesome5, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const { width } = Dimensions.get('window');
+
+const Home: React.FC = () => {
+  const categoryFadeAnim = useRef(new Animated.Value(0)).current;
+  const offersFadeAnim = useRef(new Animated.Value(0)).current;
+  const tutorialsFadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(categoryFadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(offersFadeAnim, {
+        toValue: 1,
+        duration: 500,
+        delay: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(tutorialsFadeAnim, {
+        toValue: 1,
+        duration: 500,
+        delay: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [categoryFadeAnim, offersFadeAnim, tutorialsFadeAnim]);
+
+  const offers = [
+    { title: 'Saloon', discount: '25% OFF', image: require('../../assets/images/salon.jpg') },
+    { title: 'Laundry', discount: '4% OFF', image: require('../../assets/images/laundry.jpg') },
+  ];
+
+  const videoTutorials = [
+    { 
+      title: 'DIY Home Painting', 
+      duration: '12:45', 
+      thumbnail: require('../../assets/images/Tuto1.jpg'),
+      icon: <Ionicons name="brush-outline" size={24} color="white" />,
+    },
+    { 
+      title: 'Basic Electrical Repairs', 
+      duration: '18:30', 
+      thumbnail: require('../../assets/images/Tuto2.jpg'),
+      icon: <Ionicons name="flash-outline" size={24} color="white" />,
+    },
+    { 
+      title: 'Plumbing Essentials', 
+      duration: '15:20', 
+      thumbnail: require('../../assets/images/Tuto3.jpg'),
+      icon: <Ionicons name="water-outline" size={24} color="white" />,
+    },
+  ];
+
+  const categories = [
+    {
+      icon: 'construct-outline', // Ionicons
+      label: 'Electricians',
+      color: '#ffa500',
+    },
+    {
+      icon: 'water-outline', // Ionicons
+      label: 'Plumbers',
+      color: '#4b9fd6',
+    },
+    {
+      icon: 'cut-outline', // Ionicons
+      label: 'Beauticians',
+      color: '#ff69b4',
+    },
+    {
+      icon: 'trash-bin-outline', // Ionicons
+      label: 'Cleaning',
+      color: '#4caf50',
+    },
+    {
+      icon1: 'brush-outline', // Ionicons
+      label: 'Painters',
+      color: '#ff8c00',
+    },
+    {
+      icon: 'hammer', // Ionicons
+      label: 'Carpenters',
+      color: '#8b4513',
+    },
+    {
+      icon: 'leaf-outline', // Ionicons
+      label: 'Landscapers',
+      color: '#228b22',
+    },
+    {
+      icon: 'home-outline', // Ionicons
+      label: 'Smart Home',
+      color: '#4682B4',
+    },
+  ];
+
+  return (
+    <SafeAreaView>
+      <View className="flex flex-col h-full bg-white">
+        <View className="bg-white px-5 py-6">
+          <View className="relative">
+            <TextInput
+              className="bg-gray-100 shadow-md rounded-lg py-3 px-12 text-lg"
+              placeholder="Search services here"
+              placeholderTextColor="gray"
+            />
+            <FontAwesome5 
+              name="search" 
+              size={20} 
+              color="gray" 
+              style={{ position: 'absolute', left: 14, top: 14 }}
+            />
+          </View>
+        </View>
+
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 30 }}>
+          {/* Offers Section */}
+          <Animated.View
+            style={[
+              { opacity: offersFadeAnim },
+              { transform: [{ translateY: offersFadeAnim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] },
+            ]}
+          >
+            <Text className="text-lg font-bold mb-4">Offers</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingRight: 20 }}
+            >
+              {offers.map((offer, index) => (
+                <View
+                  key={index}
+                  className="bg-gray-100 p-4 rounded-lg mr-4"
+                  style={{ width: width * 0.7 }}
+                >
+                  <Image source={offer.image} className="w-full h-40 rounded-lg mb-3" />
+                  <Text className="text-base font-bold mb-2">{offer.title}</Text>
+                  <Text className="text-green-500 text-base">{offer.discount}</Text>
+                </View>
+              ))}
+            </ScrollView>
+          </Animated.View>
+
+          {/* Categories Section */}
+          <View className="mt-6">
+            <Text className="text-lg font-bold mb-5">Categories</Text>
+            <View className="flex-row justify-between flex-wrap">
+              {categories.map((category, index) => (
+                <TouchableOpacity 
+                  key={index}
+                  className="w-1/4 items-center mb-4"
+                  onPress={() => {/* Handle navigation */}}
+                >
+                  <View className="bg-gray-100 p-4 rounded-full">
+                    <Ionicons 
+                      name={category.icon} 
+                      size={24} 
+                      color={category.color}
+                    />
+                  </View>
+                  <Text className="text-sm font-medium mt-2 text-center">
+                    {category.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          
+          {/* Video Tutorials Section */}
+          <Animated.View
+            style={[
+              { opacity: tutorialsFadeAnim, marginTop: 20 },
+              { transform: [{ translateY: tutorialsFadeAnim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] },
+            ]}
+          >
+            <Text className="text-lg font-bold mb-4">Video Tutorials</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingRight: 20 }}
+            >
+              {videoTutorials.map((tutorial, index) => (
+                <TouchableOpacity
+                  key={index}
+                  className="bg-gray-100 p-4 rounded-lg mr-4"
+                  style={{ width: width * 0.7 }}
+                >
+                  <View className="relative">
+                    <Image 
+                      source={tutorial.thumbnail} 
+                      className="w-full h-40 rounded-lg mb-3"
+                    />
+                    <View 
+                      className="absolute bottom-3 right-3 bg-black/50 p-2 rounded-full"
+                    >
+                      {tutorial.icon}
+                    </View>
+                    <View 
+                      className="absolute bottom-3 left-3 bg-black/50 px-2 py-1 rounded-md"
+                    >
+                      <Text className="text-white text-sm">{tutorial.duration}</Text>
+                    </View>
+                  </View>
+                  <Text className="text-base font-bold mb-2">{tutorial.title}</Text>
+                  <View className="flex-row items-center">
+                    <Ionicons name="play-circle-outline" size={20} color="#4caf50" />
+                    <Text className="text-green-600 ml-2">Watch Tutorial</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </Animated.View>          
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Home;
