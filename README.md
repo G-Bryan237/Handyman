@@ -57,7 +57,7 @@ You can start developing by editing the files inside the **app** directory. This
 ![Home page Screenshot](./screenshot/Home.jpg)
 
 [INBOX_PAGE]
-![INBOX page Screenshot](./screenshot/Inbox.jpg)
+![INBOX page Screenshot](./screenshot/inbox.jpg)
 
 [BOOKING_PAGE]
 ![BOOKING page Screenshot](./screenshot/Booking.jpg)
