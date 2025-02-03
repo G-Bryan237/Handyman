@@ -64,7 +64,6 @@ You can start developing by editing the files inside the **app** directory. This
 
 [PROFILE_PAGE]
 ![PROFILE page Screenshot](./screenshot/Profile.jpg)
-
 ## Contact
 
 Feel free to reach out with feedback or inquiries:
