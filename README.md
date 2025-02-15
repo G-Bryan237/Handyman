@@ -54,10 +54,10 @@ You can start developing by editing the files inside the **app** directory. This
 
 ## Screenshots
 [HOME_PAGE]
-<div> <img src="screenshots/Home.jpg" width="300" /> </div>
+<div> <img src="screenshot/Home.jpg" width="300" /> </div>
 
 [INBOX_PAGE]
-<div> <img src="screenshot/Inbox.jpg" width="300" /> </div>
+<div> <img src="screenshot/inbox.jpg" width="300" /> </div>
 
 [BOOKING_PAGE]
 <div> <img src="screenshot/Booking.jpg" width="300" /> </div>
