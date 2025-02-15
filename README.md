@@ -54,16 +54,17 @@ You can start developing by editing the files inside the **app** directory. This
 
 ## Screenshots
 [HOME_PAGE]
-![Home page Screenshot](./screenshot/Home.jpg)
+<div> <img src="screenshots/Home.jpg" width="300" /> </div>
 
 [INBOX_PAGE]
-![INBOX page Screenshot](./screenshot/inbox.jpg)
+<div> <img src="screenshot/Inbox.jpg" width="300" /> </div>
 
 [BOOKING_PAGE]
-![BOOKING page Screenshot](./screenshot/Booking.jpg)
+<div> <img src="screenshot/Booking.jpg" width="300" /> </div>
 
 [PROFILE_PAGE]
-![PROFILE page Screenshot](./screenshot/Profile.jpg)
+<div> <img src="screenshot/Profile.jpg" width="300" /> </div>
+
 ## Contact
 
 Feel free to reach out with feedback or inquiries:
