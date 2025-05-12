@@ -159,11 +159,11 @@ const Home: React.FC = () => {
         contentContainerStyle={{ paddingBottom: 30 }}
         className="flex-1"
       >
-        {/* Header */}
-        <View className="bg-primary-500 pt-12 pb-6 px-5 rounded-b-3xl shadow-md">
-          <View className="flex-row justify-between items-center mb-3">
-            {/* Welcome greeting - fixed to display the user's name correctly */}
-            <Text className="text-white text-2xl font-bold">
+        {/* Header - adjusted spacing */}
+        <View className="bg-primary-500 pt-16 pb-6 px-5 rounded-b-3xl shadow-md">
+          <View className="flex-row justify-between items-center mb-0">
+            {/* Welcome greeting - positioned closer to search bar */}
+            <Text className="text-white text-xl font-bold">
               Welcome back, {userData?.name || userName || 'User'}
             </Text>
             <TouchableOpacity 
@@ -175,8 +175,8 @@ const Home: React.FC = () => {
             </TouchableOpacity>
           </View>
           
-          {/* Search Bar */}
-          <View className="relative mt-2">
+          {/* Search Bar - reduced top margin */}
+          <View className="relative mt-1">
             <TextInput
               className="bg-white border border-gray-200 rounded-xl py-4 px-12 text-base shadow-sm"
               placeholder="Search services here"
