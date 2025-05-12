@@ -18,7 +18,7 @@ export default function Layout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Fontisto
               name="home"
               size={24}
@@ -33,7 +33,7 @@ export default function Layout() {
         name="booking"
         options={{
           title: "Booking",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <MaterialCommunityIcons
               name="ticket-confirmation"
               size={24}
@@ -48,7 +48,7 @@ export default function Layout() {
         name="inbox"
         options={{
           title: "Inbox",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <MaterialCommunityIcons name="inbox-arrow-down" size={24} color={focused ? "#4682B4" : "#ffffff"} />
 
           ),
@@ -60,7 +60,7 @@ export default function Layout() {
         name="you"
         options={{
           title: "You",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Fontisto
               name="person"
               size={24}

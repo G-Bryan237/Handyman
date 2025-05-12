@@ -1,8 +1,9 @@
-  // app/discounts/beautician.tsx (apply the same to laundry.tsx and cleaning.tsx)
+// app/discounts/beautician.tsx (apply the same to laundry.tsx and cleaning.tsx)
   import React from 'react';
   import { View, Text, FlatList, TouchableOpacity } from 'react-native';
   import { useRouter } from 'expo-router';
   import { FontAwesome5 } from '@expo/vector-icons';
+  import { SafeAreaView } from 'react-native-safe-area-context';
 
   const BeauticianDiscounts = () => {
     const router = useRouter();
@@ -13,11 +14,11 @@
     ];
 
     return (
-      <View className="flex-1 bg-white">
+      <SafeAreaView className="flex-1 bg-white" edges={['top']}>
         {/* Header with return button */}
         <View className="flex-row items-center p-4 border-b border-gray-200">
           <TouchableOpacity 
-            onPress={() => router.back()}
+            onPress={() => router.push('/')}
             className="p-2"
           >
             <FontAwesome5 name="arrow-left" size={20} color="black" />
@@ -38,7 +39,7 @@
             </View>
           )}
         />
-      </View>
+      </SafeAreaView>
     );
   };
 
