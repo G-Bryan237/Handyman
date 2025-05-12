@@ -7,6 +7,7 @@ module.exports = {
     "./hooks/**/*.{js,jsx,ts,tsx}",
     "./services/**/*.{js,jsx,ts,tsx}",
     "./constants/**/*.{js,jsx,ts,tsx}",
+    "./stores/**/*.{js,jsx,ts,tsx}", // Add stores directory
 ],
   presets: [require("nativewind/preset")],
   theme: {
@@ -23,6 +24,7 @@ module.exports = {
           700: '#064c62',
           800: '#043241',
           900: '#021921',
+          950: '#01111a', // Darker shade for deep backgrounds
         },
         secondary: {
           50: '#f5f7fa',
@@ -47,10 +49,12 @@ module.exports = {
           700: '#374151',
           800: '#1f2937',
           900: '#111827',
+          950: '#0d1321', // Darker shade for deep backgrounds
         }
       },
       borderRadius: {
         '2xl': '16px',
+        '3xl': '24px', // Add larger border radius
       },
       spacing: {
         '128': '32rem',

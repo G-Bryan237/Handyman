@@ -12,16 +12,19 @@ import {
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuthStore } from '@/stores/authStore';
 import { MaterialIcons } from '@expo/vector-icons';
+import apiService from '../../utils/api';
+import { saveToken, saveUserData } from '../../utils/storage';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const router = useRouter();
-  const { login, isLoggedIn, isLoading, error } = useAuthStore();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -30,15 +33,37 @@ export default function LoginScreen() {
   }, [isLoggedIn]);
 
   const handleLogin = async () => {
+    // Clear previous errors
+    setError(null);
+    
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
     
-    await login(email, password);
+    setIsLoading(true);
     
-    if (error) {
-      Alert.alert('Error', error);
+    try {
+      // Call login API directly
+      const response = await apiService.login({ email, password });
+      
+      // Extract token and user data
+      const { token, user } = response.data;
+      
+      // Save auth data to storage
+      await saveToken(token);
+      await saveUserData(user);
+      
+      // Update login state
+      setIsLoggedIn(true);
+      
+    } catch (err: any) {
+      // Handle login error
+      const errorMessage = err.response?.data?.error || 'Login failed. Please check your credentials.';
+      setError(errorMessage);
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 

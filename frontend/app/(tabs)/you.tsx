@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useAuthStore } from '@/stores/authStore';
+import apiService from '../../utils/api';
+import { removeToken, getUserData, clearAllData } from '../../utils/storage';
 
 const PROFILE_SECTIONS = [
   { id: '1', name: 'Personal Information', icon: 'person', route: '/profile/personal' },
@@ -20,8 +21,37 @@ const PROVIDER_SECTIONS = [
 
 export default function YouScreen() {
   const router = useRouter();
-  const { userData, logout } = useAuthStore();
+  const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
   const isProvider = userData?.role === 'provider';
+
+  // Load user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // First try to get data from storage for quick display
+        const storedUser = await getUserData();
+        if (storedUser) {
+          setUserData(storedUser);
+        }
+        
+        // Then fetch fresh data from API
+        const response = await apiService.getUserProfile();
+        if (response.data && response.data.user) {
+          setUserData(response.data.user);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        // If API call fails but we have stored data, keep using it
+        // Otherwise, we might want to redirect to login
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchUserData();
+  }, []);
 
   // Display appropriate sections based on user role
   const displaySections = isProvider 
@@ -39,7 +69,9 @@ export default function YouScreen() {
           style: "destructive",
           onPress: async () => {
             try {
-              await logout();
+              // Clear token and user data from storage
+              await clearAllData();
+              // Redirect to login
               router.replace('/auth/login');
             } catch (error) {
               Alert.alert("Error", "Failed to log out. Please try again.");
@@ -49,6 +81,14 @@ export default function YouScreen() {
       ]
     );
   };
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <Text className="text-gray-500 dark:text-gray-400">Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-gray-50 dark:bg-gray-900">

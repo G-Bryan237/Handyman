@@ -12,10 +12,12 @@ import {
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuthStore } from '@/stores/authStore';
 import { MaterialIcons } from '@expo/vector-icons';
+import apiService from '@/utils/api';
+import { setToken } from '@/utils/storage';
 
-import type { UserRole } from '@/lib/api/authApi';
+// Define UserRole type
+type UserRole = 'user' | 'provider';
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
@@ -23,11 +25,14 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [role, setRole] = useState<UserRole>('user' as UserRole);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const router = useRouter();
-  const { register, isLoggedIn, isLoading, error } = useAuthStore();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -36,6 +41,9 @@ export default function RegisterScreen() {
   }, [isLoggedIn]);
 
   const handleRegister = async () => {
+    // Clear previous errors
+    setError(null);
+    
     if (!name || !email || !password || !confirmPassword) {
       Alert.alert('Error', 'Please fill in all required fields');
       return;
@@ -51,10 +59,33 @@ export default function RegisterScreen() {
       return;
     }
     
-    await register(name, email, password, role, phone);
+    setIsLoading(true);
     
-    if (error) {
-      Alert.alert('Error', error);
+    try {
+      // Call the registration API directly
+      const response = await apiService.register({ 
+        name, 
+        email, 
+        password, 
+        role, 
+        phone, 
+        address 
+      });
+      
+      // Get the token and user from response
+      const { token, user } = response.data;
+      
+      // Save token to storage
+      await setToken(token);
+      
+      // Update login state
+      setIsLoggedIn(true);
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.error || 'Registration failed. Please try again.';
+      setError(errorMessage);
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -171,6 +202,20 @@ export default function RegisterScreen() {
                   onChangeText={setPhone}
                   placeholder="Enter your phone number"
                   keyboardType="phone-pad"
+                  className="flex-1 text-gray-800 ml-2"
+                />
+              </View>
+            </View>
+            
+            {/* Add Address field */}
+            <View>
+              <Text className="text-gray-700 font-medium mb-2">Address (Optional)</Text>
+              <View className="flex-row items-center border border-gray-300 rounded-lg px-4 py-3 bg-gray-50">
+                <MaterialIcons name="home" size={20} color="#6B7280" />
+                <TextInput
+                  value={address}
+                  onChangeText={setAddress}
+                  placeholder="Enter your address"
                   className="flex-1 text-gray-800 ml-2"
                 />
               </View>
