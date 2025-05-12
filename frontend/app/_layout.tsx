@@ -33,21 +33,29 @@ export default function RootLayout() {
       if (token) {
         // Verify the token is still valid by making an API call
         try {
+          console.log('[Layout] Validating token by retrieving user profile');
           const response = await apiService.getUserProfile();
+          console.log('[Layout] Profile API response:', response.data);
+          
           if (response.data && response.data.user) {
+            console.log('[Layout] Valid user profile retrieved, setting isLoggedIn to true');
             setIsLoggedIn(true);
           } else {
+            console.log('[Layout] No user data in response, setting isLoggedIn to false');
             setIsLoggedIn(false);
           }
-        } catch (error) {
-          console.error('Token validation failed:', error);
+        } catch (error: any) { // Type assertion for error
+          console.error('[Layout] Token validation failed:', error);
+          console.error('[Layout] Status code:', error.response?.status);
+          console.error('[Layout] Error data:', error.response?.data);
           setIsLoggedIn(false);
         }
       } else {
+        console.log('[Layout] No token found, setting isLoggedIn to false');
         setIsLoggedIn(false);
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error('[Layout] Auth check failed:', error);
       setIsLoggedIn(false);
     } finally {
       setIsLoading(false);

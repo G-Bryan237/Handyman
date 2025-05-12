@@ -34,15 +34,25 @@ export default function YouScreen() {
         const storedUser = await getUserData();
         if (storedUser) {
           setUserData(storedUser);
+          console.log('[YouScreen] Using stored user data:', storedUser);
         }
         
         // Then fetch fresh data from API
+        console.log('[YouScreen] Fetching fresh user data from API');
         const response = await apiService.getUserProfile();
+        console.log('[YouScreen] API response:', response.data);
+        
         if (response.data && response.data.user) {
+          console.log('[YouScreen] Updated user data from API');
           setUserData(response.data.user);
         }
       } catch (error) {
-        console.error('Error fetching user profile:', error);
+        console.error('[YouScreen] Error fetching user profile:', error);
+        if (error instanceof Error && (error as any).response?.data) {
+          console.error('[YouScreen] Error response:', (error as any).response.data);
+        } else {
+          console.error('[YouScreen] Unknown error:', error);
+        }
         // If API call fails but we have stored data, keep using it
         // Otherwise, we might want to redirect to login
       } finally {

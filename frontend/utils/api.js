@@ -10,16 +10,27 @@ const api = axios.create({
   },
 });
 
-// Add auth token to requests
+// Add auth token to requests with better error handling
 api.interceptors.request.use(
   async (config) => {
-    const token = await getToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Ensure baseURL is set on every request
+    if (!config.baseURL) {
+      console.warn('[API] baseURL not set on request, adding it now');
+      config.baseURL = API_URL;
+    }
+    
+    try {
+      const token = await getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error('[API] Error getting token:', error);
     }
     return config;
   },
   (error) => {
+    console.error('[API] Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
@@ -28,31 +39,57 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Enhanced error logging
+    console.error('[API] Response error:', error.message);
+    
     // Handle specific error codes
     if (error.response) {
-      const { status } = error.response;
+      const { status, data } = error.response;
+      console.error(`[API] Server responded with status ${status}:`, data);
+      
       if (status === 401) {
         // Handle unauthorized
-        // You could redirect to login or refresh token
+        console.log('[API] Unauthorized access detected');
       }
       if (status === 500) {
         // Handle server errors
+        console.log('[API] Server error detected');
       }
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('[API] No response received:', error.request);
+    } else {
+      // Something happened in setting up the request
+      console.error('[API] Request setup error:', error.message);
     }
     return Promise.reject(error);
   }
 );
 
+// Debug API configuration
+console.log('[API] API instance created with baseURL:', api.defaults.baseURL);
+
 // API service methods
-export const apiService = {
+const apiService = {
   // Authentication
-  login: (credentials) => api.post('/auth/login', credentials),
-  register: (userData) => api.post('/auth/register', userData),
+  login: (credentials) => {
+    console.log('[API] Calling login endpoint');
+    return api.post('/auth/login', credentials);
+  },
+  
+  register: (userData) => {
+    console.log('[API] Calling register endpoint with data:', JSON.stringify(userData, null, 2));
+    return api.post('/auth/register', userData);
+  },
+  
   logout: () => api.post('/auth/logout'),
   
-  // User endpoints
-  getUserProfile: () => api.get('/users/profile'),
-  updateUserProfile: (data) => api.put('/users/profile', data),
+  // User endpoints - fixed path to match backend routes
+  getUserProfile: () => {
+    console.log('[API] Calling getUserProfile endpoint at /auth/profile');
+    return api.get('/auth/profile'); // Changed from '/users/profile' to '/auth/profile'
+  },
+  updateUserProfile: (data) => api.put('/auth/profile', data), // Changed path
   
   // Service endpoints
   getServices: () => api.get('/services'),

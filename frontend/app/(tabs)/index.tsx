@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { getUserData } from '../../utils/storage';
+import apiService from '../../utils/api'; // Add API service import
 
 const { width } = Dimensions.get('window');
 
@@ -19,7 +21,40 @@ const Home: React.FC = () => {
   const offersFadeAnim = useRef(new Animated.Value(0)).current;
   const servicesFadeAnim = useRef(new Animated.Value(0)).current;
   const [expanded, setExpanded] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userData, setUserData] = useState<any>(null); // Add state for API user data
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const router = useRouter();
+
+  // Load user data from API
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiService.getUserProfile();
+        if (response && response.data && response.data.user) {
+          setUserData(response.data.user);
+          setUserName(response.data.user.name || '');
+          console.log('User profile data:', response.data.user);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        // Fall back to local storage if API fails
+        try {
+          const localUserData = await getUserData();
+          if (localUserData && localUserData.name) {
+            setUserName(localUserData.name);
+          }
+        } catch (storageError) {
+          console.error('Error loading local user data:', storageError);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchUserProfile();
+  }, []);
 
   // Add top rated services data
   const topRatedServices = [
@@ -126,8 +161,11 @@ const Home: React.FC = () => {
       >
         {/* Header */}
         <View className="bg-primary-500 pt-12 pb-6 px-5 rounded-b-3xl shadow-md">
-          <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-white text-2xl font-bold">Home Services</Text>
+          <View className="flex-row justify-between items-center mb-3">
+            {/* Welcome greeting - fixed to display the user's name correctly */}
+            <Text className="text-white text-2xl font-bold">
+              Welcome back, {userData?.name || userName || 'User'}
+            </Text>
             <TouchableOpacity 
               onPress={() => router.push('/notifications')}
               className="bg-white/20 p-2 rounded-full"
@@ -138,7 +176,7 @@ const Home: React.FC = () => {
           </View>
           
           {/* Search Bar */}
-          <View className="relative">
+          <View className="relative mt-2">
             <TextInput
               className="bg-white border border-gray-200 rounded-xl py-4 px-12 text-base shadow-sm"
               placeholder="Search services here"

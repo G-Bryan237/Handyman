@@ -26,69 +26,168 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [role, setRole] = useState<UserRole>('user' as UserRole);
+  const [role, setRole] = useState<UserRole>('user');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const router = useRouter();
 
+  // Add debug logging for initial component state
+  console.log('[DEBUG] RegisterScreen - Initial render with state:', { 
+    name, email, phone, address, role, 
+    passwordLength: password ? password.length : 0,
+    confirmPasswordMatch: password === confirmPassword
+  });
+
   useEffect(() => {
+    console.log('[RegisterScreen] Component mounted');
     if (isLoggedIn) {
+      console.log('[RegisterScreen] User logged in, redirecting to tabs');
       router.replace('/(tabs)');
     }
+    return () => {
+      console.log('[RegisterScreen] Component unmounted');
+    };
   }, [isLoggedIn]);
 
   const handleRegister = async () => {
     // Clear previous errors
     setError(null);
+    console.log('=== REGISTRATION PROCESS STARTED ===');
+    console.log('[DEBUG] Registration attempt with values:', {
+      name,
+      email,
+      phone,
+      address,
+      role,
+      passwordLength: password ? password.length : 0,
+      confirmPasswordMatch: password === confirmPassword
+    });
     
+    // Validation logging
     if (!name || !email || !password || !confirmPassword) {
+      const missingFields = [];
+      if (!name) missingFields.push('name');
+      if (!email) missingFields.push('email');
+      if (!password) missingFields.push('password');
+      if (!confirmPassword) missingFields.push('confirmPassword');
+      
+      console.log('[DEBUG] Missing fields:', missingFields);
       Alert.alert('Error', 'Please fill in all required fields');
       return;
     }
 
     if (password !== confirmPassword) {
+      console.log('[DEBUG] Password mismatch:', { 
+        passwordLength: password.length, 
+        confirmLength: confirmPassword.length 
+      });
       Alert.alert('Error', 'Passwords do not match');
       return;
     }
     
     if (password.length < 6) {
+      console.log('[DEBUG] Password too short:', password.length);
       Alert.alert('Error', 'Password must be at least 6 characters long');
       return;
     }
     
     setIsLoading(true);
+    console.log('[DEBUG] Passed all validations, proceeding with registration');
     
     try {
-      // Call the registration API directly
-      const response = await apiService.register({ 
-        name, 
-        email, 
-        password, 
-        role, 
-        phone, 
-        address 
-      });
+      console.log('[DEBUG] About to call apiService.register()');
+      const userData = { name, email, password, role, phone, address };
+      console.log('[DEBUG] API call payload:', JSON.stringify(userData, null, 2));
       
-      // Get the token and user from response
-      const { token, user } = response.data;
+      // Log the API service object to verify it exists and has the register method
+      console.log('[DEBUG] apiService object:', Object.keys(apiService));
       
-      // Save token to storage
-      await setToken(token);
-      
-      // Update login state
-      setIsLoggedIn(true);
+      // Wrap API call in try-catch for more detailed error logging
+      try {
+        const response = await apiService.register(userData);
+        console.log('[DEBUG] Raw API response:', response);
+        console.log('[DEBUG] Registration API call succeeded:', JSON.stringify(response.data, null, 2));
+        
+        // Get the token and user from response
+        const { token, user } = response.data;
+        console.log(`[DEBUG] Token extracted:`, token ? 'Valid token received' : 'No token in response');
+        console.log(`[DEBUG] User data extracted:`, user ? 'Valid user data received' : 'No user in response');
+        
+        if (!token) {
+          console.log('[DEBUG] WARNING: No token received in successful response');
+        }
+        
+        // Save token to storage with error handling
+        console.log('[DEBUG] Attempting to save token to storage');
+        try {
+          await setToken(token);
+          console.log('[DEBUG] Token saved successfully');
+        } catch (storageError) {
+          console.log('[DEBUG] Error saving token:', storageError);
+          throw new Error('Failed to save authentication token');
+        }
+        
+        // Update login state
+        console.log('[DEBUG] Setting isLoggedIn to true');
+        setIsLoggedIn(true);
+      } catch (apiError: any) {
+        console.log('[DEBUG] API call threw exception:', apiError);
+        console.log('[DEBUG] API error stack:', apiError.stack);
+        throw apiError; // re-throw to be caught by outer catch
+      }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || 'Registration failed. Please try again.';
+      console.log('[DEBUG] Registration error type:', typeof err);
+      console.log('[DEBUG] Is error an Error object?', err instanceof Error);
+      console.log('[DEBUG] Error name:', err.name);
+      console.log('[DEBUG] Error message:', err.message);
+      console.log('[DEBUG] Error stack:', err.stack);
+      
+      // Log specific axios error properties if available
+      if (err.response) {
+        console.log('[DEBUG] Error response status:', err.response.status);
+        console.log('[DEBUG] Error response headers:', JSON.stringify(err.response.headers, null, 2));
+        console.log('[DEBUG] Error response data:', JSON.stringify(err.response.data, null, 2));
+      } else if (err.request) {
+        console.log('[DEBUG] Error request:', 'Request was made but no response received');
+        console.log('[DEBUG] Error request details:', JSON.stringify(err.request, null, 2));
+      } else {
+        console.log('[DEBUG] Error setting up request:', err.message);
+      }
+      
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+        console.log('[DEBUG] Using error message from API response');
+      } else if (err.message) {
+        errorMessage = err.message;
+        console.log('[DEBUG] Using error message from Error object');
+      }
+      
+      console.log('[DEBUG] Final error message to display:', errorMessage);
       setError(errorMessage);
       Alert.alert('Error', errorMessage);
     } finally {
+      console.log('[DEBUG] Registration process complete, setting isLoading to false');
       setIsLoading(false);
+      console.log('=== REGISTRATION PROCESS ENDED ===');
     }
   };
 
+  // Add logging before render
+  console.log('[DEBUG] RegisterScreen rendering, current state:', { 
+    hasName: !!name, 
+    hasEmail: !!email,
+    formComplete: !!(name && email && password && confirmPassword),
+    isLoading, 
+    isLoggedIn,
+    error
+  });
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -107,60 +206,6 @@ export default function RegisterScreen() {
             <Text className="text-gray-500 text-center mt-2">
               Sign up to get started
             </Text>
-          </View>
-
-          {/* Role Selection */}
-          <View className="mb-6">
-            <Text className="text-gray-700 font-medium mb-3 text-center">I am a:</Text>
-            <View className="flex-row justify-between">
-              <TouchableOpacity 
-                onPress={() => setRole('user' as UserRole)}
-                className={`flex-1 py-3 rounded-lg mr-2 border ${
-                  role === 'user' 
-                    ? 'bg-primary-600 border-primary-600' 
-                    : 'bg-white border-gray-300'
-                }`}
-              >
-                <View className="items-center">
-                  <MaterialIcons 
-                    name="person" 
-                    size={24} 
-                    color={role === 'user' ? 'white' : '#6B7280'} 
-                  />
-                  <Text 
-                    className={`font-medium mt-1 ${
-                      role === 'user' ? 'text-white' : 'text-gray-700'
-                    }`}
-                  >
-                    User
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
-                onPress={() => setRole('provider' as UserRole)}
-                className={`flex-1 py-3 rounded-lg ml-2 border ${
-                  role === 'provider' 
-                    ? 'bg-primary-600 border-primary-600' 
-                    : 'bg-white border-gray-300'
-                }`}
-              >
-                <View className="items-center">
-                  <MaterialIcons 
-                    name="handyman" 
-                    size={24} 
-                    color={role === 'provider' ? 'white' : '#6B7280'} 
-                  />
-                  <Text 
-                    className={`font-medium mt-1 ${
-                      role === 'provider' ? 'text-white' : 'text-gray-700'
-                    }`}
-                  >
-                    Service Provider
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
           </View>
 
           {/* Form */}
@@ -230,6 +275,8 @@ export default function RegisterScreen() {
                   onChangeText={setPassword}
                   placeholder="Create a password"
                   secureTextEntry={!showPassword}
+                  autoCorrect={false}
+                  textContentType="oneTimeCode"
                   className="flex-1 text-gray-800 ml-2"
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -250,9 +297,18 @@ export default function RegisterScreen() {
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
                   placeholder="Confirm your password"
-                  secureTextEntry={!showPassword}
+                  secureTextEntry={!showConfirmPassword}
+                  autoCorrect={false}
+                  textContentType="oneTimeCode"
                   className="flex-1 text-gray-800 ml-2"
                 />
+                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  <MaterialIcons 
+                    name={showConfirmPassword ? "visibility" : "visibility-off"} 
+                    size={20} 
+                    color="#6B7280" 
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
