@@ -116,7 +116,7 @@ const Home: React.FC = () => {
     {
       image: require('../../assets/images/offers/1.png'),
       service: 'beautician',
-      title: '20% Off Beauty Services',
+      title: 'Beauty Services Discounts',
       validUntil: 'Valid until Oct 30'
     },
     {

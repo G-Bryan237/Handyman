@@ -93,7 +93,11 @@ const MarqueeText: React.FC<{ text: string }> = ({ text }) => {
 
 // Rest of the Categories component remains the same
 const Categories: React.FC = () => {
-  // ... (rest of the code stays exactly the same)
+  return (
+    <View>
+      <Text>Categories Component</Text>
+    </View>
+  );
 };
 
 export default Categories;
