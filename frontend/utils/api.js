@@ -102,9 +102,23 @@ const apiService = {
   updateBooking: (id, data) => api.put(`/bookings/${id}`, data),
   cancelBooking: (id) => api.delete(`/bookings/${id}`),
   
-  // Provider endpoints
-  getProviders: (filters) => api.get('/providers', { params: filters }),
-  getProviderDetails: (id) => api.get(`/providers/${id}`),
+  // Provider endpoints - Updated to better match our provider profile implementation
+  getProviders: (filters) => {
+    console.log('[API] Calling getProviders endpoint with filters:', filters);
+    return api.get('/providers', { params: filters });
+  },
+  getProviderDetails: (id) => {
+    console.log(`[API] Calling getProviderDetails endpoint for provider ID: ${id}`);
+    return api.get(`/providers/${id}`);
+  },
+  getProviderReviews: (id) => {
+    console.log(`[API] Fetching reviews for provider ID: ${id}`);
+    return api.get(`/providers/${id}/reviews`);
+  },
+  getProviderServices: (id) => {
+    console.log(`[API] Fetching services for provider ID: ${id}`);
+    return api.get(`/providers/${id}/services`);
+  },
   
   // Reviews
   createReview: (data) => api.post('/reviews', data),

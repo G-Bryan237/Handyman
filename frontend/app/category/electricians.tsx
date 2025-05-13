@@ -8,8 +8,8 @@ const ElectriciansPage = () => {
   const [sortOption, setSortOption] = useState('recommended');
   const [filterView, setFilterView] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeBadgeInfo, setActiveBadgeInfo] = useState(null); // Track which badge info is being shown
-  
+  const [activeBadgeInfo, setActiveBadgeInfo] = useState<string | null>(null); // Fixed type
+
   // Updated provider data with online status and last seen time
   const providers = [
     {
@@ -80,40 +80,40 @@ const ElectriciansPage = () => {
     },
   ];
 
-  // Helper function to get badge info based on transaction count
-  const getBadgeInfo = (transactions) => {
+  // Fixed type definition for transactions parameter
+  const getBadgeInfo = (transactions: number) => {
     if (transactions >= 200) {
       return { 
-        icon: "medal", 
+        icon: "medal" as const, // Fix icon type
         color: '#FFD700', 
         size: 16,
         label: "Gold",
-        info: `This provider has completed ${transactions} trades (200+ successful trades required for Gold)`
+        info: `This provider has completed 200+ successful trades`
       };
     }
     if (transactions >= 100) {
       return { 
-        icon: "medal", 
+        icon: "medal" as const, // Fix icon type
         color: '#C0C0C0', 
         size: 16,
         label: "Silver",
-        info: `This provider has completed ${transactions} trades (100+ successful trades required for Silver)`
+        info: `This provider has completed 100+ successful trades `
       };
     }
     if (transactions >= 50) {
       return { 
-        icon: "medal", 
+        icon: "medal" as const, // Fix icon type
         color: '#CD7F32', 
         size: 16,
         label: "Bronze",
-        info: `This provider has completed ${transactions} trades (50+ successful trades required for Bronze)`
+        info: `This provider has completed 50+ successful trades`
       };
     }
     return { icon: null, color: null, size: null, label: null, info: null };
   };
 
-  // Toggle badge info display
-  const toggleBadgeInfo = (providerId) => {
+  // Fixed type definition for providerId parameter
+  const toggleBadgeInfo = (providerId: string) => {
     if (activeBadgeInfo === providerId) {
       setActiveBadgeInfo(null);
     } else {
@@ -148,7 +148,8 @@ const ElectriciansPage = () => {
       case 'price-high-low':
         return filtered.sort((a, b) => b.startingPrice - a.startingPrice);
       case 'rating':
-        return filtered.sort((a, b) => b.rating - a.rating);
+        // Update the rating sort to use transactions success rate instead
+        return filtered.sort((a, b) => b.transactions.successRate - a.transactions.successRate);
       default:
         return filtered;
     }
@@ -406,10 +407,19 @@ const ElectriciansPage = () => {
                     </View>
                   )}
                   
-                  {/* See profile button - Now the only clickable navigation element */}
+                  {/* See profile button with proper navigation */}
                   <TouchableOpacity 
                     className="bg-primary-500 rounded-lg px-4 py-2 shadow-sm"
-                    onPress={() => router.push(`/provider/${provider.id}`)}
+                    onPress={() => {
+                      if (provider.id) {
+                        console.log(`Navigating to provider profile: ${provider.id}`);
+                        router.push({
+                          pathname: `/provider/${provider.id}`,
+                        });
+                      } else {
+                        console.error("Provider ID is missing");
+                      }
+                    }}
                   >
                     <Text className="text-white font-medium text-sm">See Profile</Text>
                   </TouchableOpacity>
