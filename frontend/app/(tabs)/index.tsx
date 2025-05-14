@@ -142,7 +142,7 @@ const Home: React.FC = () => {
     { icon: 'construction', label: 'Carpenters', color: '#8b4513' },
     { icon: 'grass', label: 'Landscapers', color: '#228b22' },
     { icon: 'home', label: 'Smart Home', color: '#4682B4' },
-    { icon: 'settings', label: 'Technicians', color: '#ff5722' },
+    { icon: 'settings', label: 'Mechanics', color: '#ff5722' },
     { icon: 'security', label: 'Security', color: '#607d8b' },
     { icon: 'local-shipping', label: 'Movers', color: '#8bc34a' },
     { icon: 'wb-sunny', label: 'Solar Services', color: '#ffc107' },
