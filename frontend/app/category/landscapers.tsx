@@ -24,7 +24,7 @@ const LandscapersPage = () => {
       },
       reviews: 278,
       startingPrice: 20000,
-      imageUrl: require('../../assets/images/landscaper/landscaper1.jpg'),
+      imageUrl: require('../../assets/images/landscapers/landscaper1.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "12 landscapers"
@@ -41,7 +41,7 @@ const LandscapersPage = () => {
       },
       reviews: 187,
       startingPrice: 30000,
-      imageUrl: require('../../assets/images/landscaper/landscaper2.jpg'),
+      imageUrl: require('../../assets/images/landscapers/landscaper2.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "8 designers"
@@ -58,7 +58,7 @@ const LandscapersPage = () => {
       },
       reviews: 114,
       startingPrice: 12000,
-      imageUrl: require('../../assets/images/landscaper/landscaper3.jpg'),
+      imageUrl: require('../../assets/images/landscapers/landscaper3.jpg'),
       onlineStatus: "offline",
       type: "individual"
     },
@@ -74,7 +74,7 @@ const LandscapersPage = () => {
       },
       reviews: 195,
       startingPrice: 25000,
-      imageUrl: require('../../assets/images/landscaper/landscaper3.jpg'),
+      imageUrl: require('../../assets/images/landscapers/landscaper3.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "7 technicians"

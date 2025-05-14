@@ -24,7 +24,7 @@ const PaintersPage = () => {
       },
       reviews: 197,
       startingPrice: 18000,
-      imageUrl: require('../../assets/images/providers/painter1.png'),
+      imageUrl: require('../../assets/images/painter/painter2.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "7 painters"
@@ -41,7 +41,7 @@ const PaintersPage = () => {
       },
       reviews: 145,
       startingPrice: 22000,
-      imageUrl: require('../../assets/images/providers/painter2.png'),
+      imageUrl: require('../../assets/images/painter/painter3.jpg'),
       onlineStatus: "offline",
       type: "company",
       teamSize: "5 artists"
@@ -58,7 +58,7 @@ const PaintersPage = () => {
       },
       reviews: 91,
       startingPrice: 16000,
-      imageUrl: require('../../assets/images/providers/painter3.png'),
+      imageUrl: require('../../assets/images/painter/painter1.jpg'),
       onlineStatus: "online",
       type: "individual"
     },
@@ -74,7 +74,7 @@ const PaintersPage = () => {
       },
       reviews: 167,
       startingPrice: 35000,
-      imageUrl: require('../../assets/images/providers/painter4.png'),
+      imageUrl: require('../../assets/images/painter/painter4.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "12 professionals"

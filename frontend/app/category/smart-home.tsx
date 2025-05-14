@@ -24,7 +24,7 @@ const SmartHomePage = () => {
       },
       reviews: 278,
       startingPrice: 30000,
-      imageUrl: require('../../assets/images/providers/smarthome1.png'),
+      imageUrl: require('../../assets/images/smart_home_technicians/tech1.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "8 technicians"
@@ -41,7 +41,7 @@ const SmartHomePage = () => {
       },
       reviews: 192,
       startingPrice: 22000,
-      imageUrl: require('../../assets/images/providers/smarthome2.png'),
+      imageUrl: require('../../assets/images/smart_home_technicians/tech2.jpg'),
       onlineStatus: "offline",
       type: "company",
       teamSize: "6 specialists"
@@ -58,7 +58,7 @@ const SmartHomePage = () => {
       },
       reviews: 215,
       startingPrice: 25000,
-      imageUrl: require('../../assets/images/providers/smarthome3.png'),
+      imageUrl: require('../../assets/images/smart_home_technicians/tech3.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "7 technicians"
@@ -75,7 +75,7 @@ const SmartHomePage = () => {
       },
       reviews: 108,
       startingPrice: 15000,
-      imageUrl: require('../../assets/images/providers/smarthome4.png'),
+      imageUrl: require('../../assets/images/smart_home_technicians/tech4.jpg'),
       onlineStatus: "online",
       type: "individual"
     },

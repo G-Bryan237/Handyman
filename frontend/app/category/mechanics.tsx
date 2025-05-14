@@ -24,7 +24,7 @@ const MechanicsPage = () => {
       },
       reviews: 289,
       startingPrice: 20000,
-      imageUrl: require('../../assets/images/providers/mechanic1.png'),
+      imageUrl: require('../../assets/images/Mechanics/mech1.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "10 mechanics"
@@ -41,7 +41,7 @@ const MechanicsPage = () => {
       },
       reviews: 215,
       startingPrice: 25000,
-      imageUrl: require('../../assets/images/providers/mechanic2.png'),
+      imageUrl: require('../../assets/images/Mechanics/mech2.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "8 mechanics"
@@ -58,7 +58,7 @@ const MechanicsPage = () => {
       },
       reviews: 118,
       startingPrice: 30000,
-      imageUrl: require('../../assets/images/providers/mechanic3.png'),
+      imageUrl: require('../../assets/images/Mechanics/mech3.jpg'),
       onlineStatus: "offline",
       type: "individual"
     },
@@ -74,7 +74,7 @@ const MechanicsPage = () => {
       },
       reviews: 247,
       startingPrice: 18000,
-      imageUrl: require('../../assets/images/providers/mechanic4.png'),
+      imageUrl: require('../../assets/images/Mechanics/mech4.jpg'),
       onlineStatus: "online",
       type: "company",
       teamSize: "12 technicians"

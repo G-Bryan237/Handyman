@@ -3,81 +3,81 @@ import { View, Text, TouchableOpacity, Image, ScrollView, TextInput } from 'reac
 import { useRouter } from 'expo-router';
 import { FontAwesome5, MaterialIcons, Ionicons, AntDesign, Feather, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CarpentersPage = () => {
+const SolarServicesPage = () => {
   const router = useRouter();
   const [sortOption, setSortOption] = useState('recommended');
   const [filterView, setFilterView] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeBadgeInfo, setActiveBadgeInfo] = useState<string | null>(null);
   
-  // Provider data for carpenters
+  // Provider data for solar services
   const providers = [
     {
       id: '1',
-      name: "Woodcraft Masters",
-      specialty: "Custom Furniture",
-      description: "Skilled craftsmen creating custom furniture pieces, built-ins, and wood fixtures designed to your specifications.",
+      name: "SolarTech Solutions",
+      specialty: "Solar Panel Installation",
+      description: "Professional residential and commercial solar panel installation with energy assessment and system design.",
       transactions: {
         total: 178,
         last30Days: 21,
-        successRate: 99.1
+        successRate: 98.9
       },
-      reviews: 203,
-      startingPrice: 25000,
-      imageUrl: require('../../assets/images/carpenter/carpenter1.jpg'),
+      reviews: 195,
+      startingPrice: 750000,
+      imageUrl: require('../../assets/images/Solar/solar1.jpg'),
       onlineStatus: "online",
       type: "company",
-      teamSize: "7 craftsmen"
+      teamSize: "12 technicians"
     },
     {
       id: '2',
-      name: "Robert's Carpentry",
-      specialty: "Repairs & Installations",
-      description: "Carpentry repair services, door and window installations, and structural fixes with quality materials.",
+      name: "EcoEnergy Systems",
+      specialty: "Solar Water Heating",
+      description: "Specialized in solar water heating systems for homes and businesses. Energy efficient solutions for hot water needs.",
       transactions: {
-        total: 134,
-        last30Days: 18,
-        successRate: 98.5
+        total: 125,
+        last30Days: 16,
+        successRate: 97.6
       },
-      reviews: 167,
-      startingPrice: 15000,
-      imageUrl: require('../../assets/images/carpenter/carpenter2.jpg'),
+      reviews: 149,
+      startingPrice: 350000,
+      imageUrl: require('../../assets/images/Solar/solar2.jpg'),
       onlineStatus: "online",
       type: "company",
-      teamSize: "5 carpenters"
+      teamSize: "8 technicians"
     },
     {
       id: '3',
-      name: "Thomas Williams",
-      specialty: "Cabinetry & Shelving",
-      description: "Specializing in custom kitchen cabinets, shelving solutions, and built-in storage units for homes.",
+      name: "Solar Maintenance Pro",
+      specialty: "Maintenance & Repair",
+      description: "Expert maintenance, cleaning, and repair services for existing solar installations to maximize efficiency and lifespan.",
       transactions: {
-        total: 92,
-        last30Days: 11,
-        successRate: 97.8
+        total: 212,
+        last30Days: 27,
+        successRate: 99.1
       },
-      reviews: 128,
-      startingPrice: 18000,
-      imageUrl: require('../../assets/images/carpenter/carpenter5.jpg'),
-      onlineStatus: "offline",
-      type: "individual"
+      reviews: 231,
+      startingPrice: 45000,
+      imageUrl: require('../../assets/images/Solar/solar3.jpg'),
+      onlineStatus: "online",
+      type: "company",
+      teamSize: "10 specialists"
     },
     {
       id: '4',
-      name: "Fine Finish Carpentry",
-      specialty: "Finish Carpentry",
-      description: "Expert finish carpentry including crown molding, wainscoting, baseboards, and decorative woodwork.",
+      name: "Robert Green",
+      specialty: "Solar Consultancy",
+      description: "Professional solar energy consultancy services including site assessment, system design, and ROI analysis.",
       transactions: {
-        total: 215,
-        last30Days: 26,
-        successRate: 99.5
+        total: 76,
+        last30Days: 12,
+        successRate: 96.8
       },
-      reviews: 258,
-      startingPrice: 22000,
-      imageUrl: require('../../assets/images/carpenter/carpenter4.jpg'),
-      onlineStatus: "online",
-      type: "company",
-      teamSize: "9 specialists"
+      reviews: 97,
+      startingPrice: 60000,
+      imageUrl: require('../../assets/images/Solar/solar4.jpg'),
+      onlineStatus: "offline",
+      type: "individual"
     },
   ];
 
@@ -167,7 +167,7 @@ const CarpentersPage = () => {
           >
             <Ionicons name="arrow-back" size={20} color="white" />
           </TouchableOpacity>
-          <Text className="text-white text-xl font-bold">Carpenters</Text>
+          <Text className="text-white text-xl font-bold">Solar Services</Text>
         </View>
         
         {/* Search Bar */}
@@ -261,13 +261,13 @@ const CarpentersPage = () => {
         {/* Category Info */}
         <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
-            <View className="bg-[#a16207] rounded-full p-2 mr-2">
-              <MaterialCommunityIcons name="hammer" size={20} color="white" />
+            <View className="bg-[#eab308] rounded-full p-2 mr-2">
+              <MaterialIcons name="wb-sunny" size={20} color="white" />
             </View>
-            <Text className="text-gray-800 text-lg font-semibold">Find carpenters near you</Text>
+            <Text className="text-gray-800 text-lg font-semibold">Find solar service providers near you</Text>
           </View>
           <Text className="text-gray-600 text-sm">
-            Skilled carpenters for furniture, cabinets, repairs and custom woodworking
+            Professional installation, maintenance, and consultation for solar energy systems
           </Text>
         </View>
         
@@ -454,4 +454,4 @@ const CarpentersPage = () => {
   );
 };
 
-export default CarpentersPage;
+export default SolarServicesPage;
