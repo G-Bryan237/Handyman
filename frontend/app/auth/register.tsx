@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -14,7 +14,6 @@ import {
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import apiService from '@/utils/api';
-import { setToken } from '@/utils/storage';
 
 // Define UserRole type
 type UserRole = 'user' | 'provider';
@@ -31,7 +30,6 @@ export default function RegisterScreen() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const router = useRouter();
 
@@ -41,17 +39,6 @@ export default function RegisterScreen() {
     passwordLength: password ? password.length : 0,
     confirmPasswordMatch: password === confirmPassword
   });
-
-  useEffect(() => {
-    console.log('[RegisterScreen] Component mounted');
-    if (isLoggedIn) {
-      console.log('[RegisterScreen] User logged in, redirecting to tabs');
-      router.replace('/(tabs)');
-    }
-    return () => {
-      console.log('[RegisterScreen] Component unmounted');
-    };
-  }, [isLoggedIn]);
 
   const handleRegister = async () => {
     // Clear previous errors
@@ -112,28 +99,20 @@ export default function RegisterScreen() {
         console.log('[DEBUG] Raw API response:', response);
         console.log('[DEBUG] Registration API call succeeded:', JSON.stringify(response.data, null, 2));
         
-        // Get the token and user from response
-        const { token, user } = response.data;
-        console.log(`[DEBUG] Token extracted:`, token ? 'Valid token received' : 'No token in response');
-        console.log(`[DEBUG] User data extracted:`, user ? 'Valid user data received' : 'No user in response');
-        
-        if (!token) {
-          console.log('[DEBUG] WARNING: No token received in successful response');
-        }
-        
-        // Save token to storage with error handling
-        console.log('[DEBUG] Attempting to save token to storage');
-        try {
-          await setToken(token);
-          console.log('[DEBUG] Token saved successfully');
-        } catch (storageError) {
-          console.log('[DEBUG] Error saving token:', storageError);
-          throw new Error('Failed to save authentication token');
-        }
-        
-        // Update login state
-        console.log('[DEBUG] Setting isLoggedIn to true');
-        setIsLoggedIn(true);
+        // Instead of storing token and setting isLoggedIn, show success message and redirect to login
+        Alert.alert(
+          'Registration Successful',
+          'Your account has been created successfully. Please login with your credentials.',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                console.log('[DEBUG] Navigating to login screen after successful registration');
+                router.replace('/auth/login');
+              }
+            }
+          ]
+        );
       } catch (apiError: any) {
         console.log('[DEBUG] API call threw exception:', apiError);
         console.log('[DEBUG] API error stack:', apiError.stack);
@@ -178,13 +157,12 @@ export default function RegisterScreen() {
     }
   };
 
-  // Add logging before render
+  // Update logging to remove isLoggedIn
   console.log('[DEBUG] RegisterScreen rendering, current state:', { 
     hasName: !!name, 
     hasEmail: !!email,
     formComplete: !!(name && email && password && confirmPassword),
-    isLoading, 
-    isLoggedIn,
+    isLoading,
     error
   });
   
