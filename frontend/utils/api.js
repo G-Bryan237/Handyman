@@ -123,6 +123,12 @@ const apiService = {
   // Reviews
   createReview: (data) => api.post('/reviews', data),
   getReviews: (providerId) => api.get(`/reviews`, { params: { providerId } }),
+  
+  // New provider registration
+  becomeProvider: (providerData) => {
+    console.log('[API] Calling becomeProvider endpoint with data:', JSON.stringify(providerData, null, 2));
+    return api.post('/providers/register', providerData);
+  },
 };
 
 export default apiService;
