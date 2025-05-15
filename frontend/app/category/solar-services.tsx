@@ -259,7 +259,7 @@ const SolarServicesPage = () => {
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#eab308] rounded-full p-2 mr-2">
               <MaterialIcons name="wb-sunny" size={20} color="white" />
@@ -269,7 +269,7 @@ const SolarServicesPage = () => {
           <Text className="text-gray-600 text-sm">
             Professional installation, maintenance, and consultation for solar energy systems
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">

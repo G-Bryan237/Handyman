@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { getUserData } from '../../utils/storage';
-import apiService from '../../utils/api'; // Add API service import
+import apiService from '../../utils/api'; 
+import { getCategoryRoutePath, getServiceRoutePath } from '../../utils/routeMapping'; // Import the route mapping utility
 
 const { width } = Dimensions.get('window');
 
@@ -258,7 +259,7 @@ const Home: React.FC = () => {
                 {displayedCategories.map((category, index) => (
                   <TouchableOpacity 
                     key={index} 
-                    onPress={() => router.push(`/category/${category.label.toLowerCase()}` as any)}
+                    onPress={() => router.push(`/category/${getCategoryRoutePath(category.label)}` as any)}
                     className="w-[22%] mb-7"
                   >
                     <View className="rounded-2xl p-3.5 mb-2 items-center justify-center bg-primary-100 h-16">
@@ -296,7 +297,7 @@ const Home: React.FC = () => {
                 {topRatedServices.map((service, index) => (
                   <TouchableOpacity 
                     key={index}
-                    onPress={() => router.push(`/service/${service.category.toLowerCase()}` as any)}
+                    onPress={() => router.push(`/service/${getServiceRoutePath(service.category)}` as any)}
                     className="mr-4 bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100"
                     style={{ width: width * 0.7 }}
                   >

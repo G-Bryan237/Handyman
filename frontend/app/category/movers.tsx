@@ -259,7 +259,7 @@ const MoversPage = () => {
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#8b5cf6] rounded-full p-2 mr-2">
               <FontAwesome5 name="truck-moving" size={20} color="white" />
@@ -269,7 +269,7 @@ const MoversPage = () => {
           <Text className="text-gray-600 text-sm">
             Professional moving services for homes, offices, and single-item transportation
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">

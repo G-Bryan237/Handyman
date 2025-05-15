@@ -259,7 +259,7 @@ const MechanicsPage = () => {
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#ef4444] rounded-full p-2 mr-2">
               <FontAwesome5 name="tools" size={18} color="white" />
@@ -269,7 +269,7 @@ const MechanicsPage = () => {
           <Text className="text-gray-600 text-sm">
             Professional auto repair, maintenance and diagnostic services for all vehicle types
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">

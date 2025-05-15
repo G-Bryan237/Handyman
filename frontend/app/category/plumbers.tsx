@@ -258,7 +258,7 @@ const PlumbersPage = () => {
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#4b9fd6] rounded-full p-2 mr-2">
               <MaterialIcons name="plumbing" size={20} color="white" />
@@ -269,7 +269,7 @@ const PlumbersPage = () => {
             Expert plumbing services for leaks, installations, and drain cleaning
           </Text>
         </View>
-        
+         */}
         {/* Providers Count */}
         <View className="px-4 py-2">
           <Text className="text-gray-600 text-sm">{filteredProviders.length} service providers found</Text>

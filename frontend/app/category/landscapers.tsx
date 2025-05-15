@@ -258,7 +258,7 @@ const LandscapersPage = () => {
           </TouchableOpacity>
         </ScrollView>
 
-        {/* Category Info */}
+        {/* Category Info
         <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#16a34a] rounded-full p-2 mr-2">
@@ -269,7 +269,7 @@ const LandscapersPage = () => {
           <Text className="text-gray-600 text-sm">
             Professional landscape design, garden maintenance and lawn care services
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">

@@ -259,7 +259,7 @@ const PaintersPage = () => {
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#f59e0b] rounded-full p-2 mr-2">
               <MaterialIcons name="format-paint" size={20} color="white" />
@@ -269,7 +269,7 @@ const PaintersPage = () => {
           <Text className="text-gray-600 text-sm">
             Professional painting services for interior, exterior, and decorative finishes
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">

@@ -173,21 +173,21 @@ const SecurityPage = () => {
       <View className="flex-row bg-white shadow-sm">
         <TouchableOpacity 
           onPress={() => setFilterView('all')}
-          className={`flex-1 py-3 text-center ${filterView === 'all' ? 'bg-primary-500' : ''}`}
+          className={`flex-1 py-3 items-center border-b-2 ${filterView === 'all' ? 'border-primary-500' : 'border-transparent'}`}
         >
-          <Text className={`text-sm font-medium ${filterView === 'all' ? 'text-white' : 'text-gray-700'}`}>All</Text>
+          <Text className={`${filterView === 'all' ? 'text-primary-500 font-semibold' : 'text-gray-600'}`}>All</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           onPress={() => setFilterView('company')}
-          className={`flex-1 py-3 text-center ${filterView === 'company' ? 'bg-primary-500' : ''}`}
+          className={`flex-1 py-3 items-center border-b-2 ${filterView === 'company' ? 'border-primary-500' : 'border-transparent'}`}
         >
-          <Text className={`text-sm font-medium ${filterView === 'company' ? 'text-white' : 'text-gray-700'}`}>Companies</Text>
+          <Text className={`${filterView === 'company' ? 'text-primary-500 font-semibold' : 'text-gray-600'}`}>Companies</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           onPress={() => setFilterView('individual')}
-          className={`flex-1 py-3 text-center ${filterView === 'individual' ? 'bg-primary-500' : ''}`}
+          className={`flex-1 py-3 items-center border-b-2 ${filterView === 'individual' ? 'border-primary-500' : 'border-transparent'}`}
         >
-          <Text className={`text-sm font-medium ${filterView === 'individual' ? 'text-white' : 'text-gray-700'}`}>Individuals</Text>
+          <Text className={`${filterView === 'individual' ? 'text-primary-500 font-semibold' : 'text-gray-600'}`}>Individuals</Text>
         </TouchableOpacity>
       </View>
 
@@ -204,27 +204,44 @@ const SecurityPage = () => {
           className="px-4 py-3 bg-white mb-2"
         >
           <TouchableOpacity 
+            className={`rounded-full py-1.5 px-4 mr-2 border ${sortOption === 'recommended' ? 'bg-primary-50 border-primary-500' : 'border-gray-300'}`}
             onPress={() => setSortOption('recommended')}
-            className={`py-2 px-4 rounded-full mr-2 ${sortOption === 'recommended' ? 'bg-primary-500' : 'bg-gray-100'}`}
           >
-            <Text className={`text-sm font-medium ${sortOption === 'recommended' ? 'text-white' : 'text-gray-700'}`}>Recommended</Text>
+            <Text className={`text-sm ${sortOption === 'recommended' ? 'text-primary-500 font-medium' : 'text-gray-600'}`}>
+              Recommended
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          
+          <TouchableOpacity
+            className={`rounded-full py-1.5 px-4 mr-2 border ${sortOption === 'rating' ? 'bg-primary-50 border-primary-500' : 'border-gray-300'}`}
+            onPress={() => setSortOption('rating')}
+          >
+            <Text className={`text-sm ${sortOption === 'rating' ? 'text-primary-500 font-medium' : 'text-gray-600'}`}>
+              Highest Rated
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            className={`rounded-full py-1.5 px-4 mr-2 border ${sortOption === 'priceLowToHigh' ? 'bg-primary-50 border-primary-500' : 'border-gray-300'}`}
             onPress={() => setSortOption('priceLowToHigh')}
-            className={`py-2 px-4 rounded-full mr-2 ${sortOption === 'priceLowToHigh' ? 'bg-primary-500' : 'bg-gray-100'}`}
           >
-            <Text className={`text-sm font-medium ${sortOption === 'priceLowToHigh' ? 'text-white' : 'text-gray-700'}`}>Price: Low to High</Text>
+            <Text className={`text-sm ${sortOption === 'priceLowToHigh' ? 'text-primary-500 font-medium' : 'text-gray-600'}`}>
+              Price: Low to High
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          
+          <TouchableOpacity
+            className={`rounded-full py-1.5 px-4 mr-2 border ${sortOption === 'priceHighToLow' ? 'bg-primary-50 border-primary-500' : 'border-gray-300'}`}
             onPress={() => setSortOption('priceHighToLow')}
-            className={`py-2 px-4 rounded-full ${sortOption === 'priceHighToLow' ? 'bg-primary-500' : 'bg-gray-100'}`}
           >
-            <Text className={`text-sm font-medium ${sortOption === 'priceHighToLow' ? 'text-white' : 'text-gray-700'}`}>Price: High to Low</Text>
+            <Text className={`text-sm ${sortOption === 'priceHighToLow' ? 'text-primary-500 font-medium' : 'text-gray-600'}`}>
+              Price: High to Low
+            </Text>
           </TouchableOpacity>
         </ScrollView>
 
         {/* Category Info */}
-        <View className="px-4 mb-4">
+        {/* <View className="px-4 mb-4">
           <View className="flex-row items-center mb-2">
             <View className="bg-[#dc2626] rounded-full p-2 mr-2">
               <MaterialIcons name="security" size={20} color="white" />
@@ -234,7 +251,7 @@ const SecurityPage = () => {
           <Text className="text-gray-600 text-sm">
             Security systems, surveillance cameras, alarms and access control solutions
           </Text>
-        </View>
+        </View> */}
         
         {/* Providers Count */}
         <View className="px-4 py-2">
