@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import { View, Text, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { setActiveRole } from '../../utils/storage';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 export default function ProviderWelcomeScreen() {
   const router = useRouter();
   
   useEffect(() => {
-    const switchToProvider = async () => {
+    const setupProviderMode = async () => {
       try {
         // Set active role to provider
         await setActiveRole('provider');
         
-        // Wait for 3 seconds then navigate to provider dashboard
+        // Wait a moment to show the welcome screen
         const timer = setTimeout(() => {
+          // Navigate to provider dashboard
           router.replace('/provider/dashboard');
         }, 3000);
         
@@ -26,7 +28,7 @@ export default function ProviderWelcomeScreen() {
       }
     };
     
-    switchToProvider();
+    setupProviderMode();
   }, []);
   
   return (

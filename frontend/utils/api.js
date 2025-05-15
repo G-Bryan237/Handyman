@@ -84,12 +84,16 @@ const apiService = {
   
   logout: () => api.post('/auth/logout'),
   
-  // User endpoints - fixed path to match backend routes
+  // User endpoints - ensure path matches backend routes
   getUserProfile: () => {
     console.log('[API] Calling getUserProfile endpoint at /auth/profile');
-    return api.get('/auth/profile'); // Changed from '/users/profile' to '/auth/profile'
+    return api.get('/auth/profile');
   },
-  updateUserProfile: (data) => api.put('/auth/profile', data), // Changed path
+  
+  updateUserProfile: (data) => {
+    console.log('[API] Calling updateUserProfile endpoint with data:', JSON.stringify(data));
+    return api.put('/auth/profile', data);
+  },
   
   // Service endpoints
   getServices: () => api.get('/services'),
@@ -126,8 +130,27 @@ const apiService = {
   
   // New provider registration
   becomeProvider: (providerData) => {
-    console.log('[API] Calling becomeProvider endpoint with data:', JSON.stringify(providerData, null, 2));
-    return api.post('/providers/register', providerData);
+    console.log('[API] Calling becomeProvider endpoint with data:', JSON.stringify({
+      ...providerData,
+      profilePhotoUrl: providerData.profilePhotoUrl ? 'URL exists (not shown for brevity)' : null,
+      certifications: providerData.certifications ? `${providerData.certifications.length} certifications uploaded` : []
+    }, null, 2));
+    
+    // Change the endpoint from '/providers/register' to '/auth/provider'
+    return api.post('/auth/provider', providerData);
+  },
+  
+  // New method for uploading files directly through API if needed
+  uploadFile: (file, type = 'image') => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', type);
+    
+    return api.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
 };
 

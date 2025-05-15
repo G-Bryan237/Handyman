@@ -125,6 +125,17 @@ export const updateNestedUserData = async (path, value) => {
   }, false);
 };
 
+// Update profile photo URL specifically
+export const updateProfilePhotoUrl = async (photoUrl) => {
+  return handleStorageOperation(async () => {
+    const userData = await getUserData() || {};
+    const updatedData = { ...userData, profilePhotoUrl: photoUrl };
+    console.log('[Storage] Updating profile photo URL to:', photoUrl);
+    await AsyncStorage.setItem(KEYS.USER_DATA, JSON.stringify(updatedData));
+    return true;
+  }, false);
+};
+
 // Clear only user-related data (for logout)
 export const clearUserData = async () => {
   return handleStorageOperation(async () => {
@@ -403,4 +414,5 @@ export default {
   getCachedCategories,
   setDarkMode,
   getDarkMode,
+  updateProfilePhotoUrl,
 };

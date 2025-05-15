@@ -200,6 +200,32 @@ export default function ProfileScreen() {
     );
   };
   
+  // Add switch to client mode handler
+  const handleSwitchToClient = async () => {
+    Alert.alert(
+      "Switch to Client Mode",
+      "Do you want to switch to client mode?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Switch",
+          onPress: async () => {
+            try {
+              await setActiveRole('user');
+              router.replace('/client/welcome');
+            } catch (error) {
+              console.error('Error switching to client mode:', error);
+              Alert.alert('Error', 'Failed to switch to client mode. Please try again.');
+            }
+          }
+        }
+      ]
+    );
+  };
+  
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
@@ -309,6 +335,25 @@ export default function ProfileScreen() {
             </View>
           </View>
         </View>
+        
+        {/* Switch to Client Mode Button - New section */}
+        <TouchableOpacity
+          className="bg-white mt-4 mx-4 rounded-xl shadow-sm overflow-hidden"
+          onPress={handleSwitchToClient}
+        >
+          <View className="p-4 flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center mr-3">
+                <Ionicons name="person" size={20} color="#2563eb" />
+              </View>
+              <View>
+                <Text className="text-gray-800 font-medium">Switch to Client Mode</Text>
+                <Text className="text-gray-500 text-xs mt-1">Use the app as a regular client</Text>
+              </View>
+            </View>
+            <MaterialIcons name="keyboard-arrow-right" size={24} color="#9ca3af" />
+          </View>
+        </TouchableOpacity>
         
         {/* Account Section */}
         <View className="bg-white mt-4 mx-4 rounded-xl shadow-sm overflow-hidden">

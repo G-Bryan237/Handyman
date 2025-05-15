@@ -8,7 +8,7 @@ import "../global.css";
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { View, ActivityIndicator } from 'react-native';
-import { getToken, getUserData } from '../utils/storage';
+import { getToken, getUserData, getActiveRole } from '../utils/storage';
 import apiService from '../utils/api';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -23,6 +23,7 @@ export default function RootLayout() {
   // Local authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeRole, setActiveRole] = useState('user'); // Track active role
   
   // Check authentication status on app load
   const checkAuth = async () => {
@@ -40,6 +41,11 @@ export default function RootLayout() {
           if (response.data && response.data.user) {
             console.log('[Layout] Valid user profile retrieved, setting isLoggedIn to true');
             setIsLoggedIn(true);
+            
+            // Get active role (provider or user)
+            const role = await getActiveRole();
+            console.log('[Layout] Active role retrieved:', role);
+            setActiveRole(role);
           } else {
             console.log('[Layout] No user data in response, setting isLoggedIn to false');
             setIsLoggedIn(false);
@@ -77,8 +83,10 @@ export default function RootLayout() {
     );
   }
 
-  // Determine the initial route based on authentication status
-  const initialRouteName = isLoggedIn ? '(tabs)' : 'auth';
+  // Determine the initial route based on authentication status and role
+  // If provider mode is active, redirect to provider dashboard
+  const initialRouteName = !isLoggedIn ? 'auth' : 
+                           activeRole === 'provider' ? 'provider' : '(tabs)';
 
   return (
     <>
@@ -100,6 +108,20 @@ export default function RootLayout() {
         <Stack.Screen 
           name="(tabs)" 
         />
+        <Stack.Screen
+          name="provider"
+          options={{
+            // Provider stack
+            headerShown: false
+          }}
+        />
+        <Stack.Screen 
+          name="client"
+          options={{
+            // Client transition screens
+            headerShown: false
+          }}
+        />
         <Stack.Screen 
           name="discounts/beautician" 
         />
@@ -116,6 +138,8 @@ export default function RootLayout() {
         <>
           {/* Redirect protected routes to auth */}
           {(window.location.pathname.includes('/(tabs)') || 
+            window.location.pathname.includes('/provider') ||
+            window.location.pathname.includes('/client') ||
             window.location.pathname.includes('/discounts/')) && (
             <Redirect href="/auth" />
           )}
@@ -124,7 +148,7 @@ export default function RootLayout() {
       
       {/* Redirect authenticated users trying to access auth */}
       {isLoggedIn && window.location.pathname.includes('/auth') && (
-        <Redirect href="/(tabs)" />
+        <Redirect href={activeRole === 'provider' ? '/provider' : '/(tabs)'} />
       )}
     </>
   );

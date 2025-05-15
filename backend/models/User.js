@@ -1,6 +1,43 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Define provider profile schema
+const ProviderProfileSchema = new mongoose.Schema({
+  businessName: String,
+  experience: String,
+  bio: String,
+  services: [String],
+  hourlyRate: Number,
+  providerType: {
+    type: String,
+    enum: ['individual', 'company'],
+    default: 'individual'
+  },
+  employeeCount: Number,
+  profilePhotoUrl: String,
+  certifications: [{
+    name: String,
+    url: String,
+    publicId: String
+  }],
+  availability: {
+    workingDays: [String],
+    hours: {
+      start: String,
+      end: String
+    },
+    expressJobs: Boolean
+  },
+  serviceArea: {
+    city: String,
+    neighborhood: String
+  },
+  payment: {
+    method: String,
+    accountName: String,
+    accountNumber: String
+  }
+}, { _id: false });
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -27,6 +64,14 @@ const UserSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  city: {
+    type: String,
+  },
+  profilePhotoUrl: {
+    type: String,
+  },
+  // Add provider profile schema
+  providerProfile: ProviderProfileSchema,
   createdAt: {
     type: Date,
     default: Date.now,

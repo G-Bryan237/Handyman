@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useRouter } from 'expo-router';
 import { MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -50,53 +50,6 @@ export default function ProviderDashboard() {
     loadData();
   }, []);
   
-  const switchToClient = () => {
-    router.push('/client/welcome');
-  };
-  
-  const menuItems = [
-    {
-      id: 'jobs',
-      title: 'Jobs',
-      icon: 'clipboard-list',
-      color: '#3b82f6',
-      route: '/provider/tabs/jobs',
-      description: 'Manage service requests'
-    },
-    {
-      id: 'earnings',
-      title: 'Earnings',
-      icon: 'wallet',
-      color: '#10b981',
-      route: '/provider/tabs/earnings',
-      description: 'Track your income'
-    },
-    {
-      id: 'reputation',
-      title: 'Reputation',
-      icon: 'star',
-      color: '#f59e0b',
-      route: '/provider/tabs/reputation',
-      description: 'View ratings & reviews'
-    },
-    {
-      id: 'schedule',
-      title: 'Schedule',
-      icon: 'calendar',
-      color: '#8b5cf6',
-      route: '/provider/tabs/schedule',
-      description: 'Manage availability'
-    },
-    {
-      id: 'profile',
-      title: 'Profile',
-      icon: 'account',
-      color: '#ef4444',
-      route: '/provider/tabs/profile',
-      description: 'Update your information'
-    },
-  ];
-
   const handleSwitchToClient = () => {
     router.replace('/client/welcome');
   };
@@ -111,24 +64,6 @@ export default function ProviderDashboard() {
   
   return (
     <View className="flex-1">
-      {/* Header */}
-      <View className="bg-primary-500 pt-12 pb-6 px-5">
-        <View className="flex-row justify-between items-center">
-          <View>
-            <Text className="text-white text-2xl font-bold">Provider Dashboard</Text>
-            <Text className="text-white/80 mt-1">Manage your services</Text>
-          </View>
-          
-          <TouchableOpacity 
-            onPress={handleSwitchToClient}
-            className="bg-white/20 px-3 py-2 rounded-lg flex-row items-center"
-          >
-            <Ionicons name="swap-horizontal" size={16} color="white" className="mr-1" />
-            <Text className="text-white text-sm">Switch to Client</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      
       {/* Tab Navigator */}
       <Tab.Navigator
         screenOptions={{

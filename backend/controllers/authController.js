@@ -109,3 +109,101 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+// Update user profile
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, email, phone, address, city, profilePhotoUrl } = req.body;
+    
+    // Find user by id from auth middleware
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Update user fields if provided
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (address) user.address = address;
+    if (city) user.city = city;
+    if (profilePhotoUrl) user.profilePhotoUrl = profilePhotoUrl;
+    
+    // Save updated user
+    await user.save();
+    
+    // Return updated user data
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        profilePhotoUrl: user.profilePhotoUrl
+      }
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Add new becomeProvider function
+exports.becomeProvider = async (req, res) => {
+  try {
+    console.log('[Controller] becomeProvider called with data:', req.body);
+    
+    // Find user by id from auth middleware
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Update user role to provider
+    user.role = 'provider';
+    
+    // Create or update provider profile
+    // Consider adding a separate Provider model in the future for more details
+    user.providerProfile = {
+      businessName: req.body.businessName,
+      experience: req.body.experience,
+      bio: req.body.bio,
+      services: req.body.services,
+      hourlyRate: req.body.hourlyRate,
+      providerType: req.body.providerType,
+      profilePhotoUrl: req.body.profilePhotoUrl,
+      certifications: req.body.certifications,
+      availability: req.body.availability,
+      serviceArea: req.body.serviceArea,
+      payment: req.body.payment
+    };
+    
+    // If provider is a company, store employee count
+    if (req.body.providerType === 'company') {
+      user.providerProfile.employeeCount = req.body.employeeCount;
+    }
+    
+    // Save the updated user
+    await user.save();
+    
+    // Return success response
+    res.status(200).json({
+      success: true,
+      message: 'Successfully registered as a provider',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profilePhotoUrl: user.profilePhotoUrl,
+        providerProfile: user.providerProfile
+      }
+    });
+  } catch (error) {
+    console.error('Provider registration error:', error);
+    res.status(500).json({ error: 'Server error during provider registration' });
+  }
+};

@@ -12,6 +12,24 @@ Welcome to the **Handyman Mobile App**, your one-stop solution for finding relia
 - **Secure Payments**: Easy and safe payment methods integrated within the app.
 - **Reviews and Ratings**: Check reviews to select the best professionals for your needs.
 
+### User Profiles
+- Personal profile management with photo uploads
+- View and edit personal information
+- Upload profile pictures using Cloudinary integration
+- Role switching between client and service provider
+
+### Service Provider Features
+- Professional profile creation with service descriptions
+- Certification uploads and verification
+- Service pricing and availability settings
+- Customer request management
+
+### Client Features
+- Browse service providers by category
+- View provider details, ratings, and reviews
+- Book services with convenient scheduling
+- Track booking status and history
+
 ---
 
 ## Technology Stack
@@ -64,6 +82,19 @@ You can start developing by editing the files inside the **app** directory. This
 
 [PROFILE_PAGE]
 <div> <img src="frontend/screenshot/Profile.jpg" width="300" /> </div>
+
+## Technical Implementation
+
+### Profile Management
+- User authentication with JWT tokens
+- Secure profile data storage and retrieval
+- Image processing and cloud storage via Cloudinary
+- Real-time profile updates
+
+### Backend Integration
+- RESTful API communication
+- Robust error handling for network issues
+- Offline capabilities and data persistence
 
 ## Contact
 

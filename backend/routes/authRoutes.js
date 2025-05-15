@@ -9,5 +9,7 @@ router.post('/login', authController.login);
 
 // Protected routes
 router.get('/profile', protect, authController.getProfile);
+router.put('/profile', protect, authController.updateProfile);
+router.post('/provider', protect, authController.becomeProvider);
 
 module.exports = router;
