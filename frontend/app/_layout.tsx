@@ -131,6 +131,12 @@ export default function RootLayout() {
         <Stack.Screen 
           name="discounts/cleaning"
         />
+        <Stack.Screen 
+          name="category"
+          options={{
+            headerShown: false
+          }}
+        />
       </Stack>
       
       {/* Global redirection based on auth state */}

@@ -36,17 +36,23 @@ const CATEGORIES = [
   { id: 'security', name: 'Security', icon: 'security' },
   { id: 'mover', name: 'Mover', icon: 'local-shipping' },
   { id: 'solar', name: 'Solar Expert', icon: 'wb-sunny' },
+  { id: 'hvac', name: 'HVAC Technician', icon: 'ac-unit' },
+  { id: 'appliance', name: 'Appliance Repair', icon: 'kitchen' },
+  { id: 'roofing', name: 'Roofing', icon: 'roofing' },
+  { id: 'flooring', name: 'Flooring', icon: 'layers' },
+  { id: 'pest', name: 'Pest Control', icon: 'bug-report' },
+  { id: 'glass', name: 'Glass & Windows', icon: 'window' },
 ];
 
 // Working days options
 const WORKING_DAYS = [
-  { id: 'mon', name: 'Monday' },
-  { id: 'tue', name: 'Tuesday' },
-  { id: 'wed', name: 'Wednesday' },
-  { id: 'thu', name: 'Thursday' },
-  { id: 'fri', name: 'Friday' },
-  { id: 'sat', name: 'Saturday' },
-  { id: 'sun', name: 'Sunday' },
+  { id: 'monday', name: 'Monday' },
+  { id: 'tuesday', name: 'Tuesday' },
+  { id: 'wednesday', name: 'Wednesday' },
+  { id: 'thursday', name: 'Thursday' },
+  { id: 'friday', name: 'Friday' },
+  { id: 'saturday', name: 'Saturday' },
+  { id: 'sunday', name: 'Sunday' },
 ];
 
 // Cities in Cameroon
@@ -447,7 +453,7 @@ export default function ProviderRegistration() {
         });
         
         // Mark provider onboarding as complete
-        await setProviderOnboardingComplete(true);
+        await setProviderOnboardingComplete();
         
         // Show success and navigate to provider mode
         Alert.alert(

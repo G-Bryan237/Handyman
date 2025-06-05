@@ -141,7 +141,140 @@ const getProviderData = (id: string): Provider | undefined => {
       availableHours: "9:00 AM - 7:00 PM",
       certificates: ["Certified Electrical Technician"]
     },
-    // Additional mock providers would be added here
+    {
+      id: 'beautician_1',
+      name: "Beauty Plus",
+      specialty: "Hair Styling & Makeup",
+      description: "Professional hair styling and makeup services for all occasions.",
+      longDescription: "Professional hair styling and makeup services for all occasions. Our team of stylists brings the latest trends to you with years of experience in the beauty industry.",
+      transactions: {
+        total: 245,
+        last30Days: 36,
+        successRate: 99.2,
+        successful: 242,
+        unsuccessful: 3
+      },
+      rating: 4.9,
+      reviewsCount: 312,
+      startingPrice: 18000,
+      imageUrl: require('../../assets/images/offers/1.png'),
+      onlineStatus: "online",
+      type: "company",
+      contactInfo: {
+        phone: "+237 6XX XXX XXX",
+        email: "info@beautyplus.com",
+        address: "Beauty District, Douala"
+      },
+      availableDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      availableHours: "8:00 AM - 6:00 PM",
+      certificates: ["Certified Hair Stylist", "Professional Makeup Artist"],
+      services: [
+        { name: "Hair Styling", price: 18000 },
+        { name: "Makeup Application", price: 25000 },
+        { name: "Bridal Package", price: 45000 }
+      ],
+      reviews: [
+        {
+          id: 1,
+          user: "Marie K.",
+          rating: 5,
+          text: "Amazing service! The hair styling was perfect for my wedding.",
+          date: "2 weeks ago"
+        },
+        {
+          id: 2,
+          user: "Sophie L.",
+          rating: 5,
+          text: "Professional makeup artist. Highly recommend!",
+          date: "1 month ago"
+        }
+      ]
+    },
+    {
+      id: 'beautician_2',
+      name: "Glamour Studio",
+      specialty: "Nail Art & Care",
+      description: "Specialized nail services including manicures, pedicures, gel, and creative nail art designs.",
+      longDescription: "Specialized nail services including manicures, pedicures, gel, and creative nail art designs with top quality products and experienced technicians.",
+      transactions: {
+        total: 167,
+        last30Days: 22,
+        successRate: 98.1,
+        successful: 164,
+        unsuccessful: 3
+      },
+      rating: 4.8,
+      reviewsCount: 245,
+      startingPrice: 15000,
+      imageUrl: require('../../assets/images/offers/1.png'),
+      onlineStatus: "offline",
+      type: "company",
+      contactInfo: {
+        phone: "+237 6XX XXX XXX",
+        email: "contact@glamourstudio.com",
+        address: "Fashion Street, Yaoundé"
+      },
+      availableDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      availableHours: "9:00 AM - 7:00 PM",
+      certificates: ["Certified Nail Technician", "Gel Application Specialist"],
+      services: [
+        { name: "Manicure", price: 15000 },
+        { name: "Pedicure", price: 18000 },
+        { name: "Nail Art", price: 25000 }
+      ],
+      reviews: [
+        {
+          id: 3,
+          user: "Grace M.",
+          rating: 5,
+          text: "Beautiful nail art! Very creative and professional.",
+          date: "1 week ago"
+        }
+      ]
+    },
+    // Add providers from any category - plumbers, mechanics, cleaners, etc.
+    {
+      id: 'plumber_1',
+      name: "Quick Fix Plumbing",
+      specialty: "Emergency Plumbing",
+      description: "24/7 emergency plumbing services for residential and commercial properties.",
+      longDescription: "Professional plumbing services available around the clock. We handle everything from minor leaks to major pipe installations with experienced, licensed plumbers.",
+      transactions: {
+        total: 134,
+        last30Days: 18,
+        successRate: 97.8,
+        successful: 131,
+        unsuccessful: 3
+      },
+      rating: 4.6,
+      reviewsCount: 156,
+      startingPrice: 12000,
+      imageUrl: require('../../assets/images/top_rated/Electrical.png'), // You can use a generic or plumber image
+      onlineStatus: "online",
+      type: "company",
+      contactInfo: {
+        phone: "+237 6XX XXX XXX",
+        email: "info@quickfixplumbing.com",
+        address: "Downtown District, Douala"
+      },
+      availableDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      availableHours: "24/7 Available",
+      certificates: ["Licensed Plumber", "Emergency Service Certified"],
+      services: [
+        { name: "Pipe Repair", price: 12000 },
+        { name: "Drain Cleaning", price: 15000 },
+        { name: "Toilet Installation", price: 25000 }
+      ],
+      reviews: [
+        {
+          id: 4,
+          user: "Paul T.",
+          rating: 5,
+          text: "Fixed my emergency leak at midnight. Great service!",
+          date: "3 days ago"
+        }
+      ]
+    }
   ];
   
   return providers.find(p => p.id === id);
@@ -183,13 +316,10 @@ export default function ProviderProfile() {
   const [provider, setProvider] = useState<Provider | null>(null);
   
   useEffect(() => {
-    // In a real app, this would be an API call
-    // For example: apiService.getProviderDetails(id).then(data => setProvider(data));
-    
     // Check if id is valid before fetching
     if (!id) {
       console.error("Provider ID is missing");
-      router.replace('/category/electricians');
+      router.replace('/'); // Generic fallback instead of specific category
       return;
     }
     
@@ -197,13 +327,13 @@ export default function ProviderProfile() {
       const data = getProviderData(id);
       if (!data) {
         console.error(`No provider found with ID: ${id}`);
-        router.replace('/category/electricians');
+        router.replace('/'); // Generic fallback instead of specific category
         return;
       }
       setProvider(data);
     } catch (error) {
       console.error("Error fetching provider data:", error);
-      router.replace('/category/electricians');
+      router.replace('/'); // Generic fallback instead of specific category
     }
   }, [id, router]);
   

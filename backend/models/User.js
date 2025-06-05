@@ -3,23 +3,35 @@ const bcrypt = require('bcryptjs');
 
 // Define provider profile schema
 const ProviderProfileSchema = new mongoose.Schema({
+  // Basic Information
   businessName: String,
-  experience: String,
-  bio: String,
-  services: [String],
-  hourlyRate: Number,
-  providerType: {
-    type: String,
-    enum: ['individual', 'company'],
-    default: 'individual'
-  },
-  employeeCount: Number,
+  phone_number: String,
+  gender: String,
+  address: String,
+  region: String,
   profilePhotoUrl: String,
+  
+  // Professional Details
+  categories: [String],
+  services: [String],
+  experience_years: Number,
+  tools_available: [String],
   certifications: [{
     name: String,
     url: String,
-    publicId: String
+    publicId: String,
+    description: String
   }],
+  
+  // Performance & Status
+  rating: { type: Number, default: 0 },
+  total_jobs_done: { type: Number, default: 0 },
+  status: {
+    type: String,
+    enum: ['active', 'inactive', 'suspended', 'pending'],
+    default: 'pending'
+  },
+  is_verified: { type: Boolean, default: false },
   availability: {
     workingDays: [String],
     hours: {
@@ -28,14 +40,29 @@ const ProviderProfileSchema = new mongoose.Schema({
     },
     expressJobs: Boolean
   },
+  
+  // Payment & Bank Info
+  bank_name: String,
+  account_number: String,
+  mobile_money: String,
+  payment_method: {
+    type: String,
+    enum: ['Bank', 'Mobile Money', 'Both'],
+    default: 'Mobile Money'
+  },
+  
+  // Legacy fields (keep for compatibility)
+  bio: String,
+  hourlyRate: Number,
+  providerType: {
+    type: String,
+    enum: ['individual', 'company'],
+    default: 'individual'
+  },
+  employeeCount: Number,
   serviceArea: {
     city: String,
     neighborhood: String
-  },
-  payment: {
-    method: String,
-    accountName: String,
-    accountNumber: String
   }
 }, { _id: false });
 

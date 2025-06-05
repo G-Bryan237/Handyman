@@ -425,8 +425,9 @@ const BeauticiansPage = () => {
                     onPress={() => {
                       if (provider.id) {
                         console.log(`Navigating to provider profile: ${provider.id}`);
+                        // Use a more specific route or create beautician-specific IDs
                         router.push({
-                          pathname: `/provider/${provider.id}`,
+                          pathname: `/provider/beautician_${provider.id}`,
                         });
                       } else {
                         console.error("Provider ID is missing");

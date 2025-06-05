@@ -11,7 +11,7 @@ import {
 import { Calendar, CalendarList, Agenda, DateData } from 'react-native-calendars';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { getProviderAvailability, saveProviderAvailability } from '../../../utils/storage';
+import { saveProviderAvailability, getProviderAvailability } from '../../../utils/storage';
 
 // Define types
 interface TimeSlotProps {

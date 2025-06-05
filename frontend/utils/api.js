@@ -130,13 +130,39 @@ const apiService = {
   
   // New provider registration
   becomeProvider: (providerData) => {
-    console.log('[API] Calling becomeProvider endpoint with data:', JSON.stringify({
-      ...providerData,
-      profilePhotoUrl: providerData.profilePhotoUrl ? 'URL exists (not shown for brevity)' : null,
-      certifications: providerData.certifications ? `${providerData.certifications.length} certifications uploaded` : []
+    console.log('[API] Calling becomeProvider endpoint with comprehensive data:', JSON.stringify({
+      // Basic Information
+      businessName: providerData.businessName,
+      phone_number: providerData.phone_number,
+      gender: providerData.gender,
+      address: providerData.address,
+      region: providerData.region,
+      profilePhotoUrl: providerData.profilePhotoUrl ? 'URL exists' : null,
+      
+      // Professional Details
+      categories: providerData.categories,
+      services: providerData.services,
+      experience_years: providerData.experience_years,
+      tools_available: providerData.tools_available || [],
+      certifications: providerData.certifications ? `${providerData.certifications.length} files` : [],
+      
+      // Performance & Status
+      status: providerData.status || 'pending',
+      availability: providerData.availability ? 'Schedule provided' : 'No schedule',
+      
+      // Payment & Bank Info
+      bank_name: providerData.bank_name,
+      account_number: providerData.account_number,
+      mobile_money: providerData.mobile_money,
+      payment_method: providerData.payment_method,
+      
+      // Legacy fields
+      bio: providerData.bio,
+      hourlyRate: providerData.hourlyRate,
+      providerType: providerData.providerType,
+      employeeCount: providerData.employeeCount
     }, null, 2));
     
-    // Change the endpoint from '/providers/register' to '/auth/provider'
     return api.post('/auth/provider', providerData);
   },
   
@@ -151,6 +177,38 @@ const apiService = {
         'Content-Type': 'multipart/form-data',
       },
     });
+  },
+  
+  // Provider metrics endpoints
+  getProviderMetrics: (providerId) => {
+    console.log(`[API] Fetching metrics for provider ID: ${providerId}`);
+    return api.get(`/providers/${providerId}/metrics`);
+  },
+  
+  updateProviderMetrics: (providerId, metrics) => {
+    console.log(`[API] Updating metrics for provider ID: ${providerId}`);
+    return api.put(`/providers/${providerId}/metrics`, metrics);
+  },
+  
+  // Payment methods endpoints
+  getPaymentMethods: () => {
+    console.log('[API] Fetching user payment methods');
+    return api.get('/payment/methods');
+  },
+  
+  addPaymentMethod: (paymentData) => {
+    console.log('[API] Adding new payment method');
+    return api.post('/payment/methods', paymentData);
+  },
+  
+  setDefaultPaymentMethod: (methodId) => {
+    console.log(`[API] Setting payment method ${methodId} as default`);
+    return api.put(`/payment/methods/${methodId}/default`);
+  },
+  
+  deletePaymentMethod: (methodId) => {
+    console.log(`[API] Deleting payment method ${methodId}`);
+    return api.delete(`/payment/methods/${methodId}`);
   },
 };
 

@@ -11,7 +11,7 @@ export default function CategoryLayout() {
       <Stack.Screen name="carpenters" />
       <Stack.Screen name="landscapers" />
       <Stack.Screen name="smart-home" />
-      <Stack.Screen name="technicians" />
+      <Stack.Screen name="mechanics" />
       <Stack.Screen name="security" />
       <Stack.Screen name="movers" />
       <Stack.Screen name="solar-services" />

@@ -11,6 +11,7 @@ export const getCategoryRoutePath = (categoryLabel: string): string => {
   const routeMapping: Record<string, string> = {
     'smart home': 'smart-home',
     'solar services': 'solar-services',
+    'mechanics': 'mechanics', // Direct mapping for mechanics
     // Add more mappings as needed if other discrepancies exist
   };
   
@@ -26,6 +27,14 @@ export const getServiceRoutePath = (serviceName: string): string => {
   const normalizedName = serviceName.toLowerCase();
   
   const serviceMapping: Record<string, string> = {
+    'mechanic': 'mechanics',
+    'electrician': 'electricians',
+    'plumber': 'plumbers',
+    'beautician': 'beauticians',
+    'cleaner': 'cleaning',
+    'painter': 'painters',
+    'carpenter': 'carpenters',
+    'landscaper': 'landscapers',
     // Add mappings for top rated services if needed
   };
   

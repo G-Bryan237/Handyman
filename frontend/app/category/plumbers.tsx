@@ -14,73 +14,57 @@ const PlumbersPage = () => {
   const providers = [
     {
       id: '1',
-      name: "Pro Plumbing",
-      specialty: "Pipe Repairs & Installation",
-      description: "Expert plumbing services specializing in pipe installation, leak repairs, and emergency services with 24/7 support.",
+      name: "Expert Plumbing Solutions",
+      specialty: "Emergency Plumbing",
+      description: "24/7 emergency plumbing services for leaks, clogs, and pipe repairs. Licensed and insured professionals.",
       transactions: {
-        total: 207,
+        total: 198,
         last30Days: 28,
-        successRate: 99.0
+        successRate: 99.1
       },
-      reviews: 189,
-      startingPrice: 13000,
-      imageUrl: require('../../assets/images/top_rated/pro_plumbing.png'),
+      reviews: 245,
+      startingPrice: 18000,
+      imageUrl: require('../../assets/images/top_rated/Electrical.png'),
       onlineStatus: "online",
       type: "company",
-      teamSize: "6 technicians"
+      teamSize: "8 plumbers"
     },
     {
       id: '2',
-      name: "Water Works",
-      specialty: "Bathroom Plumbing",
-      description: "Bathroom plumbing specialists offering professional installation and repair services for all fixtures.",
+      name: "Mike's Plumbing",
+      specialty: "Residential Repairs",
+      description: "Reliable residential plumbing services including fixture installation, drain cleaning, and water heater repairs.",
       transactions: {
-        total: 125,
-        last30Days: 15,
-        successRate: 97.5
+        total: 134,
+        last30Days: 19,
+        successRate: 98.5
       },
-      reviews: 156,
-      startingPrice: 11000,
-      imageUrl: require('../../assets/images/top_rated/pro_plumbing.png'),
-      onlineStatus: "offline",
-      type: "company",
-      teamSize: "4 technicians"
+      reviews: 167,
+      startingPrice: 15000,
+      imageUrl: require('../../assets/images/top_rated/Electrical.png'),
+      onlineStatus: "online",
+      type: "individual"
     },
     {
       id: '3',
-      name: "Drain Masters",
-      specialty: "Clogged Drain Solutions",
-      description: "Specialized drain cleaning service with the latest equipment and techniques for fast and effective results.",
+      name: "Commercial Plumbing Pro",
+      specialty: "Commercial Services",
+      description: "Specialized in commercial plumbing systems, backflow prevention, and large-scale pipe installations.",
       transactions: {
-        total: 93,
-        last30Days: 21,
-        successRate: 98.2
+        total: 87,
+        last30Days: 12,
+        successRate: 97.8
       },
-      reviews: 210,
-      startingPrice: 9000,
-      imageUrl: require('../../assets/images/top_rated/pro_plumbing.png'),
-      onlineStatus: "online",
-      type: "individual",
-    },
-    {
-      id: '4',
-      name: "James Plumbing",
-      specialty: "Water Heater Services",
-      description: "Water heater installation, repair, and maintenance. Expert service with competitive rates.",
-      transactions: {
-        total: 62,
-        last30Days: 9,
-        successRate: 96.8
-      },
-      reviews: 87,
-      startingPrice: 15000,
-      imageUrl: require('../../assets/images/top_rated/pro_plumbing.png'),
+      reviews: 124,
+      startingPrice: 25000,
+      imageUrl: require('../../assets/images/top_rated/Electrical.png'),
       onlineStatus: "offline",
-      type: "individual",
+      type: "company",
+      teamSize: "12 technicians"
     },
   ];
 
-  // Badge info based on transaction count - same as electricians
+  // Badge info based on transaction count
   const getBadgeInfo = (transactions: number) => {
     if (transactions >= 200) {
       return { 
@@ -257,19 +241,6 @@ const PlumbersPage = () => {
           </TouchableOpacity>
         </ScrollView>
 
-        {/* Category Info */}
-        {/* <View className="px-4 mb-4">
-          <View className="flex-row items-center mb-2">
-            <View className="bg-[#4b9fd6] rounded-full p-2 mr-2">
-              <MaterialIcons name="plumbing" size={20} color="white" />
-            </View>
-            <Text className="text-gray-800 text-lg font-semibold">Find plumbers near you</Text>
-          </View>
-          <Text className="text-gray-600 text-sm">
-            Expert plumbing services for leaks, installations, and drain cleaning
-          </Text>
-        </View>
-         */}
         {/* Providers Count */}
         <View className="px-4 py-2">
           <Text className="text-gray-600 text-sm">{filteredProviders.length} service providers found</Text>

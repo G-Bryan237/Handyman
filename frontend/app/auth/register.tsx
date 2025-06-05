@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import apiService from '@/utils/api';
+import apiService from '../../utils/api';
 
 // Define UserRole type
 type UserRole = 'user' | 'provider';

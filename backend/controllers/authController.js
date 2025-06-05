@@ -101,7 +101,10 @@ exports.getProfile = async (req, res) => {
         email: user.email,
         role: user.role,
         phone: user.phone,
-        address: user.address
+        address: user.address,
+        city: user.city,
+        profilePhotoUrl: user.profilePhotoUrl,
+        providerProfile: user.providerProfile
       }
     });
   } catch (error) {
@@ -151,10 +154,10 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-// Add new becomeProvider function
+// Enhanced becomeProvider function to match comprehensive provider structure
 exports.becomeProvider = async (req, res) => {
   try {
-    console.log('[Controller] becomeProvider called with data:', req.body);
+    console.log('[Controller] becomeProvider called with comprehensive data:', req.body);
     
     // Find user by id from auth middleware
     const user = await User.findById(req.user.id);
@@ -165,31 +168,55 @@ exports.becomeProvider = async (req, res) => {
     // Update user role to provider
     user.role = 'provider';
     
-    // Create or update provider profile
-    // Consider adding a separate Provider model in the future for more details
+    // Create comprehensive provider profile
     user.providerProfile = {
+      // Basic Information
       businessName: req.body.businessName,
-      experience: req.body.experience,
-      bio: req.body.bio,
-      services: req.body.services,
-      hourlyRate: req.body.hourlyRate,
-      providerType: req.body.providerType,
+      phone_number: req.body.phone_number || user.phone,
+      gender: req.body.gender,
+      address: req.body.address || user.address,
+      region: req.body.region,
       profilePhotoUrl: req.body.profilePhotoUrl,
-      certifications: req.body.certifications,
-      availability: req.body.availability,
-      serviceArea: req.body.serviceArea,
-      payment: req.body.payment
+      
+      // Professional Details
+      categories: req.body.categories || [],
+      services: req.body.services || [],
+      experience_years: req.body.experience_years || 0,
+      tools_available: req.body.tools_available || [],
+      certifications: req.body.certifications || [],
+      
+      // Performance & Status
+      rating: 0,
+      total_jobs_done: 0,
+      status: 'pending',
+      is_verified: false,
+      availability: req.body.availability || {
+        workingDays: [],
+        hours: { start: '09:00', end: '17:00' },
+        expressJobs: false
+      },
+      
+      // Payment & Bank Info
+      bank_name: req.body.bank_name,
+      account_number: req.body.account_number,
+      mobile_money: req.body.mobile_money,
+      payment_method: req.body.payment_method || 'Mobile Money',
+      
+      // Legacy fields for compatibility
+      bio: req.body.bio,
+      hourlyRate: req.body.hourlyRate,
+      providerType: req.body.providerType || 'individual',
+      employeeCount: req.body.employeeCount,
+      serviceArea: {
+        city: req.body.region,
+        neighborhood: req.body.address
+      }
     };
-    
-    // If provider is a company, store employee count
-    if (req.body.providerType === 'company') {
-      user.providerProfile.employeeCount = req.body.employeeCount;
-    }
     
     // Save the updated user
     await user.save();
     
-    // Return success response
+    // Return comprehensive success response
     res.status(200).json({
       success: true,
       message: 'Successfully registered as a provider',
@@ -198,6 +225,9 @@ exports.becomeProvider = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
         profilePhotoUrl: user.profilePhotoUrl,
         providerProfile: user.providerProfile
       }
